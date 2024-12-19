@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chill Santa - Innovative Memecoin</title>
+    <!-- Добавляем праздничные шрифты от Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Базовые переменные */
+        :root {
+            --heading-font: 'Mountains of Christmas', cursive;
+            --body-font: 'Poppins', sans-serif;
+            --christmas-red: #ff2f2f;
+            --christmas-green: #2ec557;
+            --christmas-gold: #ffd700;
+            --christmas-silver: #e8f0f2;
+            --snow-white: #ffffff;
+            --christmas-blue: #1e3f66;
+        }
+
+        /* Анимация снега */
+        @keyframes snowfall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        body {
+            font-family: var(--body-font);
+            background: linear-gradient(135deg, 
+                #1e4d2b 0%, /* Темно-зеленый */
+                #c41e3a 50%, /* Рождественский красный */
+                #1e4d2b 100% /* Темно-зеленый */
+            );
+            position: relative;
+            overflow-x: hidden;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            padding-top: 80px;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1001;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Стили header */
+        .header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background: rgba(30, 63, 102, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--christmas-red);
+            box-shadow: 0 2px 20px rgba(255, 47, 47, 0.2);
+            padding: 1rem 0;
+            overflow: visible;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Класс для скрытия шапки */
+        .header--hidden {
+            transform: translateY(-100%);
+        }
+
+        .logo {
+            font-family: var(--heading-font);
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--christmas-red), var(--christmas-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 10px rgba(255, 71, 71, 0.3);
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            z-index: 1002;
+        }
+
+        /* Стили hero секции */
+        .hero {
+            padding: 150px 0 100px;
+            text-align: center;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,224C672,213,768,171,864,149.3C960,128,1056,128,1152,133.3C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom no-repeat,
+                    radial-gradient(circle at top center, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-family: var(--heading-font);
+            font-size: 6rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--christmas-red), var(--christmas-gold), var(--christmas-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 3px 3px 20px rgba(255, 47, 47, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Стили features секции */
+        .features {
+            padding: 100px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, 
+                rgba(255, 255, 255, 0.15), 
+                rgba(46, 197, 87, 0.05));
+            border: 1px solid var(--christmas-silver);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--christmas-gold);
+            background: linear-gradient(145deg, 
+                rgba(255, 47, 47, 0.1), 
+                rgba(46, 197, 87, 0.1));
+            box-shadow: 0 4px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .feature-card i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-family: var(--heading-font);
+            font-size: 2rem;
+            color: var(--christmas-green);
+            margin: 1rem 0;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Стили tokenomics секции */
+        .tokenomics {
+            padding: 100px 0;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, 
+                rgba(255, 47, 47, 0.1), 
+                rgba(46, 197, 87, 0.05));
+            border: 1px solid var(--christmas-silver);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-card h3 {
+            font-family: var(--heading-font);
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--christmas-gold), var(--christmas-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Стили кнопки */
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: linear-gradient(45deg, var(--christmas-red), #ff6b6b);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+            border: 2px solid var(--christmas-gold);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+            background: linear-gradient(45deg, var(--christmas-green), var(--christmas-red));
+        }
+
+        /* Стили снежинок */
+        .snowflake {
+            position: fixed;
+            color: var(--christmas-silver);
+            font-size: 1em;
+            opacity: 0.8;
+            z-index: 1;
+            pointer-events: none;
+            animation: snowfall linear infinite;
+            text-shadow: 0 0 5px var(--christmas-silver);
+        }
+
+        h2 {
+            font-family: var(--heading-font);
+            font-size: 3.5rem;
+            text-align: center;
+            background: linear-gradient(45deg, 
+                var(--christmas-gold), 
+                var(--christmas-green), 
+                var(--christmas-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 15px rgba(255, 255, 255, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        /* Добавляем светящиеся точки */
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.5;
+        }
+
+        /* Добавляем декоративные элементы */
+        .feature-card::before {
+            content: '🎄';
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            font-size: 30px;
+            opacity: 0.8;
+        }
+
+        .stat-card::after {
+            content: '❄';
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            font-size: 24px;
+            color: var(--christmas-silver);
+            opacity: 0.8;
+        }
+
+        /* Добавляем праздничный градиентный бордер */
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                var(--christmas-red), 
+                var(--christmas-green), 
+                var(--christmas-gold), 
+                var(--christmas-red));
+            background-size: 300% 100%;
+            animation: gradientBorder 6s linear infinite;
+        }
+
+        @keyframes gradientBorder {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 300% 0%; }
+        }
+
+        /* Добавляем мерцающие звезды */
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--christmas-gold);
+            border-radius: 50%;
+            animation: twinkle 1.5s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        /* Стили для гирлянды */
+        .garland {
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            bottom: -15px;
+            left: 0;
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+        }
+
+        .garland-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .light {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: twinkleLight 1s infinite;
+        }
+
+        /* Анимация мерцания огней */
+        @keyframes twinkleLight {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.8); }
+        }
+
+        /* Цвета для огней */
+        .light:nth-child(4n+1) { background: var(--christmas-red); box-shadow: 0 0 10px var(--christmas-red); }
+        .light:nth-child(4n+2) { background: var(--christmas-green); box-shadow: 0 0 10px var(--christmas-green); }
+        .light:nth-child(4n+3) { background: var(--christmas-gold); box-shadow: 0 0 10px var(--christmas-gold); }
+        .light:nth-child(4n+4) { background: #3498db; box-shadow: 0 0 10px #3498db; }
+
+        /* Разные задержки для огней */
+        .light:nth-child(2n) { animation-delay: 0.5s; }
+        .light:nth-child(3n) { animation-delay: 0.3s; }
+        .light:nth-child(5n) { animation-delay: 0.7s; }
+
+        /* Стили для контейнера соцсетей */
+        .social-links {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1002;
+        }
+
+        .social-link {
+            color: #fff;
+            text-decoration: none;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .social-link:hover {
+            transform: translateY(-2px);
+            opacity: 1;
+        }
+
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .header .container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 80px;
+        }
+
+        .logo {
+            position: relative;
+            z-index: 1001;
+            font-family: var(--heading-font);
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--christmas-red), var(--christmas-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            text-shadow: 2px 2px 10px rgba(255, 47, 47, 0.2);
+        }
+
+        /* Обновленный новогодний фон */
+        body {
+            position: relative;
+            background: linear-gradient(135deg, 
+                #1e4d2b 0%, /* Темно-зеленый */
+                #c41e3a 50%, /* Рождественский красный */
+                #1e4d2b 100% /* Темно-зеленый */
+            );
+            overflow-x: hidden;
+        }
+
+        /* Контейнер для новогодних элементов */
+        .christmas-items {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .christmas-item {
+            position: absolute;
+            font-size: 2em;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            animation: floatItem linear infinite;
+        }
+
+        /* Новогодние символы */
+        .christmas-item:nth-child(5n+1)::after { content: '🎄'; } /* Ёлка */
+        .christmas-item:nth-child(5n+2)::after { content: '🎅'; } /* Санта */
+        .christmas-item:nth-child(5n+3)::after { content: '🎁'; } /* Подарок */
+        .christmas-item:nth-child(5n+4)::after { content: '🦌'; } /* Олень */
+        .christmas-item:nth-child(5n+5)::after { content: '⭐'; } /* Звезда */
+
+        /* Анимация плавания */
+        @keyframes floatItem {
+            0% {
+                transform: translateY(-100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Мерцающий фон */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(196, 30, 58, 0.15), /* Красное свечение */
+                rgba(30, 77, 43, 0.15), /* Зеленое свечение */
+                rgba(255, 215, 0, 0.1) /* Золотое свечение */
+            );
+            animation: glowPulse 4s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Эффект блеска */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.05) 45%,
+                    rgba(255, 255, 255, 0.1) 50%,
+                    rgba(255, 255, 255, 0.05) 55%,
+                    transparent 100%
+                );
+            animation: shimmer 10s infinite linear;
+            z-index: 1;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">Chill Santa</a>
+            <div class="social-links">
+                <a href="https://x.com/chi11_xmas_guy" target="_blank" class="social-link" title="Follow us on X">
+                    <svg class="social-icon twitter-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+                <a href="https://t.me/+3yg9l73osGxlODVi" target="_blank" class="social-link" title="Join our Telegram">
+                    <svg class="social-icon telegram-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="garland"></div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Chill Santa</h1>
+            <p>The Most Festive Memecoin of the Season</p>
+            <a href="https://www.youtube.com/watch?v=JO334h_PhuU" target="_blank" rel="noopener noreferrer" class="cta-button">Join the Holiday Magic</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>Why Choose Chill Santa?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-gift"></i>
+                    <h3>Community First</h3>
+                    <p>Join a vibrant community of holiday enthusiasts and crypto lovers</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-snowflake"></i>
+                    <h3>Fair Launch</h3>
+                    <p>No presale, no team tokens - completely fair distribution</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-sleigh"></i>
+                    <h3>Secure & Verified</h3>
+                    <p>Contract verified and secured for community safety</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tokenomics">
+        <div class="container">
+            <h2>Tokenomics</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>100M</h3>
+                    <p>Total Supply</p>
+                </div>
+                <div class="stat-card">
+                    <h3>0%</h3>
+                    <p>Tax</p>
+                </div>
+                <div class="stat-card">
+                    <h3>42%</h3>
+                    <p>LP Burned</p>
+                </div>
+                <div class="stat-card">
+                    <h3>58%</h3>
+                    <p>Community Owned</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="roadmap">
+        <div class="container">
+            <h2>Holiday Roadmap</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <ul>
+                        <li>Fair Launch</li>
+                        <li>Community Building</li>
+                        <li>Social Media Presence</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <ul>
+                        <li>Marketing Campaign</li>
+                        <li>CEX Listings</li>
+                        <li>Community Events</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <ul>
+                        <li>Major Partnerships</li>
+                        <li>Platform Development</li>
+                        <li>Global Expansion</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Join the Merriest Community in Crypto</p>
+            <div class="social-footer">
+                <a href="https://x.com/chi11_xmas_guy" target="_blank">Twitter</a>
+                <a href="https://t.me/+3yg9l73osGxlODVi" target="_blank">Telegram</a>
+            </div>
+            <p class="copyright">© 2023 Chill Santa. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Добавляем скрипт для создания снежинок -->
+    <script>
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+            
+            document.body.appendChild(snowflake);
+            
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflake, 100);
+    </script>
+
+    <!-- Добавляем скрипт для создания звезд -->
+    <script>
+        function createStars() {
+            const starsContainer = document.createElement('div');
+            starsContainer.style.position = 'fixed';
+            starsContainer.style.width = '100%';
+            starsContainer.style.height = '100%';
+            starsContainer.style.zIndex = '0';
+            document.body.prepend(starsContainer);
+
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', createStars);
+    </script>
+
+    <!-- Добавляем скрипт для создания гирлянды -->
+    <script>
+        function createGarland() {
+            const header = document.querySelector('.header');
+            const garland = document.createElement('div');
+            garland.className = 'garland';
+            
+            // Добавляем линию гирлянды
+            const line = document.createElement('div');
+            line.className = 'garland-line';
+            garland.appendChild(line);
+
+            // Вычисляем количество лампочек на основе ширины экрана
+            const numberOfLights = Math.floor(window.innerWidth / 30);
+
+            // Создаем лампочки
+            for (let i = 0; i < numberOfLights; i++) {
+                const light = document.createElement('div');
+                light.className = 'light';
+                light.style.left = `${(i * 100 / numberOfLights)}%`;
+                light.style.top = `${Math.sin(i * 0.5) * 10}px`; // Создаем волнистый эффект
+                garland.appendChild(light);
+            }
+
+            header.appendChild(garland);
+        }
+
+        // Создаем гирлянду при загрузке страницы
+        document.addEventListener('DOMContentLoaded', createGarland);
+
+        // Обновляем гирлянду при изменении размера окна
+        window.addEventListener('resize', () => {
+            const oldGarland = document.querySelector('.garland');
+            if (oldGarland) {
+                oldGarland.remove();
+            }
+            createGarland();
+        });
+    </script>
+
+    <!-- Добавляем скрипт для скрытия/показа шапки -->
+    <script>
+        const header = document.querySelector('.header');
+        let lastScrollTop = 0;
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 50) {
+                // Скрываем шапку при прокрутке ниже 50px
+                header.classList.add('header--hidden');
+            } else if (scrollTop === 0) {
+                // Показываем шапку только когда страница в самом верху
+                header.classList.remove('header--hidden');
+            }
+            
+            lastScrollTop = scrollTop;
+        }, { passive: true });
+    </script>
+
+    <script>
+        function createChristmasItems() {
+            const container = document.createElement('div');
+            container.className = 'christmas-items';
+            document.body.appendChild(container);
+
+            // Создаем мерцающий фон
+            const bgGlow = document.createElement('div');
+            bgGlow.className = 'bg-glow';
+            document.body.appendChild(bgGlow);
+
+            // Создаем новогодние элементы
+            for (let i = 0; i < 30; i++) {
+                const item = document.createElement('div');
+                item.className = 'christmas-item';
+                
+                // Случайное положение и анимация
+                item.style.left = Math.random() * 100 + 'vw';
+                item.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                item.style.animationDelay = (Math.random() * 10) + 's';
+                
+                // Случайный размер
+                const scale = Math.random() * 0.5 + 0.5;
+                item.style.transform = `scale(${scale})`;
+                
+                // Случайное вращение
+                item.style.rotate = (Math.random() * 360) + 'deg';
+                
+                container.appendChild(item);
+            }
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            createChristmasItems();
+        });
+    </script>
+</body>
+</html>
